@@ -6,35 +6,39 @@ var wordArray = new WordBank();
 var letters = require('./letters.js');
 
 // make a new word level by pulling a word from the array in words.js
-function Play() {
+function Play(currentWord, guessesLeft, alreadyGuessed) {
 
   var currentWord = new Play(wordArray.geekWords[Math.floor(Math.random() * wordArray.geekWords.length)]);
   currentWord.makeLetters();
 
   this.guessesLeft = 10;
   this.alreadyGuessed = [];
-  this.status = 'start';
 
   console.log(this.currentWord.letterShow());
   console.log(" Guesses to go: " + this.guessesLeft);
 
-  Play.prototype.isCorrect = function(playerGuess) {
-    console.log(this.currentWord);
+    if (playerGuess === letter) {
+      this.isCorrect = function(playerGuess) {
+        console.log(this.currentWord);
 
-    var isCorrect = this.currentWord.checkForLetter(playerGuess);
-    console.log("You guess a correct letter!");
-  };
+        var isCorrect = this.currentWord.checkForLetter(playerGuess);
+        console.log("You guessed a correct letter!");
+        this.guessesLeft --;
+      };
+    }
+    else {
+      this.isWrong = function(playerGuess) {
+        console.log(this.currentWord);
 
-  Play.prototype.isWrong = function(playerGuess) {
-    console.log(this.currentWord);
-
-    var isWrong = this.currentWord.checkForLetter(playerGuess);
-    console.log("You chose poorly.");
-  }
+        var isWrong = this.currentWord.checkForLetter(playerGuess);
+        console.log("You chose poorly.");
+        this.guessesLeft --;
+      }
+    }
 };
 
 function makeLetters() {
 
 };
 
-// Play();
+Play();
